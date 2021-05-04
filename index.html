@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Exercise</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="src/vendor/bootstrap.min.css">
+    <script src="src/vendor/jquery.min.js"></script>
+    <script src="src/vendor/popper.min.js"></script>
+    <script src="src/vendor/bootstrap.min.js"></script>
+    <link href="./styles/main.css" rel="stylesheet" type="text/css">
+
+
+</head>
+
+<body>
+    <div class="row p-0 m-0">
+        <div class='instruction'>
+            <ul>
+                <li>MRB Click To Select Body</li>
+                <li>MLB Click To Change Views</li>
+                <li>MMB(H) Show/Hide Panel</li>
+            </ul>
+        </div>
+        <div class="col-sm-12 p-0" style='position: absolute;top:0px;left:0px; width: 100%;height: 100%;'>
+            <div id="scene-container">
+                <div class='loader' id='loader'>
+                    <div class='loader-spinner'></div>
+                    <div class='loader-text'>Loading ...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class='container p-1'>
+
+                <div class='form-group p-2 pb-0' style="background-color: rgb(43, 102, 115);">
+                    <label for="bodyPartSelect" class='mb-0 pb-0'>Select Body Part </label>
+                    <select id='bodyPartSelect' class='form-control mt-1'>
+                        <option value="-1" selected>None</option>
+                    </select>
+
+                    <div style="position: relative; border: 1px solid white; padding: 10px 5px 0 5px; margin: 20px 0;"
+                        class='px-2'>
+                        <label
+                            style="width: 40%; left: 50%; top: 0; background-color: rgb(43, 102, 115); transform: translate(-50%, -50%); color: white; text-align: center; position: absolute">Rotation</label>
+                        <div class="d-flex flex-row justify-content-between py-2">
+                            <div class="text-center" style="width: 30%;">
+                                <label for="rotX">X Axis</label>
+                                <input type="number" class="w-100" id='rotX' min="-180" max="180" step="30" value="0">
+                            </div>
+                            <div class="text-center" style="width: 30%;">
+                                <label for="rotY">Y Axis</label>
+                                <input type="number" class="w-100" id='rotY' min="-180" max="180" value="0" step="30">
+                            </div>
+                            <div class="text-center" style="width: 30%;">
+                                <label for="rotZ">Z Axis</label>
+                                <input type="number" class="w-100" id='rotZ' min="-180" max="180" value="0" step="30">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class='px-2 mx-2'>
+                        <div class="row justify-content-between">
+                            <button class='btn btn-primary' id='resetAllBtn' style="width: 48%">Reset All</button>
+                            <button class='btn btn-primary' id='resetBtn' style="width: 48%">Reset</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- position -->
+                <div class='form-group px-2 py-1' style="background-color: rgb(43, 102, 115);">
+                    <div style="position: relative; border: 1px solid white; padding: 10px 5px 0 5px; margin: 20px 0;"
+                        class='px-2'>
+                        <button type='button' id='moveAvatarBtn' class='btn btn-primary col-12'>Move
+                            Avatar</button>
+                        <div class="d-flex flex-row justify-content-between py-2">
+                            <div class="text-center" style="width: 30%;">
+                                <label for="posX">X Axis</label>
+                                <input type="number" class="w-100" id='posX' value="0">
+                            </div>
+                            <div class="text-center" style="width: 30%;">
+                                <label for="posY">Y Axis</label>
+                                <input type="number" class="w-100" id='posY' value="0">
+                            </div>
+                            <div class="text-center" style="width: 30%;">
+                                <label for="posZ">Z Axis</label>
+                                <input type="number" class="w-100" id='posZ' value="0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Checkboxes for Objects -->
+                <div class='form-group p-2' style="background-color: rgb(43, 102, 115);">
+                    <div class="d-flex flex-row justify-content-between px-2">
+                        <div class="form-check">
+                            <input class="form-check-input" style='width:16px;
+                            height:16px;' type="checkbox" value="" id="dumbell">
+                            <label class="form-check-label" for="dumbell">
+                                Dumbell
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" style='width:16px;
+                            height:16px;' type="checkbox" value="" id="bench">
+                            <label class="form-check-label" for="bench">
+                                Bench
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class='form-group p-2' style="background-color: rgb(43, 102, 115);">
+                    <span class='mx-2'>Draw Outline</span>
+                    <label class="switch mt-1">
+                        <input type="checkbox" id='outlineCheck'>
+                        <span class="slider round"></span>
+                    </label>
+                </div> -->
+
+                <div class='form-group p-2 mt-2' style='background-color: rgb(43, 102, 115);'>
+
+                    <label for="frameNumber">Frame Number</label>
+                    <div class='px-2 mx-2'>
+                        <div class="row justify-content-between">
+                            <select id='frameNumber' class='form-control' style="width: 48%">
+                                <option value="0" selected>1</option>
+                            </select>
+                            <button class='btn btn-primary' style="width: 48%" id='playBtn'>Play</button>
+                        </div>
+                        <div class="row justify-content-between">
+                            <button class='btn btn-primary mt-2 mb-3' style="width: 48%" id='addFrameBtn'>+Add</button>
+                            <button class='btn btn-danger mt-2 mb-3' style="width: 48%"
+                                id='removeFrameBtn'>-Remove</button>
+                        </div>
+                    </div>
+
+                    <label for="poseName">Pose Name</label>
+                    <input type="text" class="form-control" style="height:30px" id="poseName" />
+                    <div class='px-2 mx-2'>
+                        <div class="row justify-content-between">
+                            <button class='btn btn-success px-4 mt-3' id='saveModalBtn' style="width: 48%">Save</button>
+                            <button class='btn btn-primary px-4 mt-3' id='loadBtn' data-toggle="modal"
+                                data-target="#poseSelectModal" style="width: 48%">Load</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!--Modal: Pose Select Window-->
+        <div class="modal fade" id="poseSelectModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="title py-2 px-4" style="color:white">
+                        Choose Pose
+                    </div><br />
+
+                    <select id='poseSelect' multiple>
+
+                    </select>
+                    <div class="modal-body pt-4">
+                        <button type="button" class="btn btn-primary col-8 offset-2" data-toggle="modal"
+                            id='openPoseBtn'>
+                            Open Pose
+                        </button>
+                    </div><br>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pose Name Confirm Modal -->
+        <div class="modal fade" id="poseNameConfirmModal" tabindex="-1" role="dialog"
+            aria-labelledby="assignTagModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="title py-2 px-4" style="color:white">
+                        Confirm
+                    </div><br />
+
+                    <div class="modal-body pt-4">
+                        <button type="button" class="btn btn-primary col-8 offset-2" data-toggle="modal" id='saveBtn'>
+                            Use Current Pose Name
+                        </button>
+
+                        <button type="button" class="btn btn-primary col-8 offset-2 mt-4 mb-4" data-dismiss="modal">
+                            Return to Viewer to Change Name
+                        </button>
+                    </div><br>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.3.4/gsap.min.js"></script>
+    <script type="module" src="src/main.js"></script>
+</body>
+
+</html>
